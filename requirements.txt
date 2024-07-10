@@ -1,0 +1,11 @@
+flask
+tensorflow
+numpy
+requests
+scikit-learn
+openai
+gunicorn
+groq
+python-dotenv
+fuzzywuzzy
+Flask-SocketIO
