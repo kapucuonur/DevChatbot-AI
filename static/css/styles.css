@@ -1,0 +1,145 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+#help-topics {
+    padding: 10px;
+    background-color: #e9ecef;
+}
+
+#help-topics h2 {
+    margin: 0 0 10px;
+    text-align: center;
+}
+
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.button-container button {
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #17a2b8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.button-container button:hover {
+    background-color: #138496;
+}
+
+/* Chat Container */
+#input-container {
+    display: flex;
+    border-top: 1px solid #ccc;
+    background-color: #f8f9fa;
+    border-radius: 15px;
+}
+
+#user-input {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+
+}
+
+/* Button Styles */
+button {
+    padding: 15px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #b4f847;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
+    transition: background-color 0.3s;
+    border-radius: 50px;
+}
+
+/* Message Bubbles */
+.user-message, .bot-message {
+    max-width: 80%;
+    padding: 12px;
+    margin: 10px;
+    border-radius: 15px;
+    animation: slideIn 0.5s ease-out;
+    font-size: 16px;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+/* User message styling */
+.user-message {
+    background-color: #d1e7dd; /* Light green */
+    align-self: flex-end;
+    text-align: right;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Bot message styling */
+.bot-message {
+    background-color: #f8d7da; /* Light red */
+    align-self: flex-start;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Center the message container */
+#messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Focused Input Style */
+#user-input:focus {
+    outline: none;
+    border: 1px solid #007BFF; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    /* padding: 5px;
+    margin: 5px; */
+}
+
+/* Animation for message bubbles */
+@keyframes slideIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Responsive Design for smaller screens */
+@media (max-width: 600px) {
+    #messages {
+        padding: 10px;
+    }
+
+    #user-input {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    button {
+        padding: 12px;
+        font-size: 14px;
+    }
+}

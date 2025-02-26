@@ -1,0 +1,116 @@
+function getGreetingBasedOnTime() {
+    const hour = new Date().getHours(); // Şu anki saati al
+
+    if (hour >= 5 && hour < 12) {
+        return "Good morning! ☀️";
+    } else if (hour >= 12 && hour < 18) {
+        return "Good afternoon! 🌤️";
+    } else if (hour >= 18 && hour < 22) {
+        return "Good evening! 🌙";
+    } else {
+        return "Good night! 🌃";
+    }
+}
+
+function getRandomQuestion() {
+    const questions = [
+        "How are you today?",
+        "How is your day going?",
+        "How are things going?",
+        "How's everything?",
+        "How are you feeling today?"
+    ];
+    const randomIndex = Math.floor(Math.random() * questions.length); // Rastgele bir soru seç
+    return questions[randomIndex];
+}
+
+function getBotResponse(userMessage) {
+    // Chatbot intents verisi
+    const intents = [
+        {
+            "tag": "greeting",
+            "patterns": ["Hello", "Hi", "Greetings", "Hey", "Hola", "Bonjour", "Merhaba"],
+            "responses": ["Hello!", "Hi!", "Greetings!", "Hola!", "Bonjour!", "Merhaba!"]
+        },
+        {
+            "tag": "goodbye",
+            "patterns": ["Goodbye", "See you later", "Bye", "Adios", "Au revoir", "Görüşürüz"],
+            "responses": ["Goodbye!", "See you later!", "Bye!", "Adios!", "Au revoir!", "Görüşürüz!"]
+        },
+        {
+            "tag": "programming_languages",
+            "patterns": ["What programming languages should I learn?", "Best languages for coding?", "Which programming languages are popular?"],
+            "responses": ["Some popular programming languages are Python, JavaScript, Java, C++, and Ruby. The best language to learn depends on what you want to build."]
+        },
+        {
+            "tag": "development",
+            "patterns": ["How do I start with software development?", "Guide to software development", "Tips for new developers"],
+            "responses": ["To start with software development, choose a programming language, learn the basics, and work on small projects. There are many online resources and communities that can help you."]
+        },
+        {
+            "tag": "ai",
+            "patterns": ["What is artificial intelligence?", "Explain AI", "How does AI work?"],
+            "responses": ["Artificial Intelligence (AI) is the simulation of human intelligence in machines. It involves machine learning, neural networks, and algorithms to solve problems and perform tasks."]
+        },
+        {
+            "tag": "coding",
+            "patterns": ["How can I improve my coding skills?", "Best practices for coding", "Tips for becoming a better programmer"],
+            "responses": ["To improve your coding skills, practice regularly, work on projects, read code written by others, and participate in coding challenges and hackathons."]
+        }
+    ];
+
+    // Kullanıcının mesajını kontrol et ve uygun yanıtı döndür
+    for (let i = 0; i < intents.length; i++) {
+        for (let pattern of intents[i].patterns) {
+            if (userMessage.toLowerCase().includes(pattern.toLowerCase())) {
+                return intents[i].responses[Math.floor(Math.random() * intents[i].responses.length)];
+            }
+        }
+    }
+
+    // Eğer uygun bir yanıt bulunmazsa, genel bir yanıt döndür
+    return "Sorry, I didn't understand that. Can you ask something else?";
+}
+
+function sendMessage() {
+    let userInput = document.getElementById('user-input').value;
+    let messages = document.getElementById('messages');
+
+    // Kullanıcı mesajını ekle
+    let userMessage = document.createElement('div');
+    userMessage.className = 'user-message';
+    userMessage.textContent = userInput;
+    messages.appendChild(userMessage);
+
+    // Bot cevabını al
+    let botResponse = getBotResponse(userInput);
+
+    // Bot cevabını ekle
+    let botMessage = document.createElement('div');
+    botMessage.className = 'bot-message';
+    botMessage.textContent = botResponse;
+    messages.appendChild(botMessage);
+
+    // Sohbeti kaydır
+    messages.scrollTop = messages.scrollHeight;
+
+    // Giriş alanını temizle
+    document.getElementById('user-input').value = '';
+}
+
+window.onload = function() {
+    let messages = document.getElementById('messages');
+
+    // Günün saatine göre karşılama mesajı al
+    const greeting = getGreetingBasedOnTime();
+    const question = getRandomQuestion();
+
+    // Karşılama mesajını sohbete ekle
+    let botMessage = document.createElement('div');
+    botMessage.className = 'bot-message';
+    botMessage.textContent = `${greeting} ${question}`;
+    messages.appendChild(botMessage);
+
+    // Sohbeti en altına kaydır
+    messages.scrollTop = messages.scrollHeight;
+};

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot Assistant</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div id="chat-container">
+        <div id="header">
+            <h1>Chatbot Assistant</h1>
+        </div>
+        <div id="help-topics">
+            <h2>Help Topics</h2>
+            <div class="button-container">
+                <button onclick="setQuestion('What programming languages should I learn?')">Programming Languages</button>
+                <button onclick="setQuestion('How do I start with software development?')">Development</button>
+                <button onclick="setQuestion('What is artificial intelligence?')">Artificial Intelligence</button>
+                <button onclick="setQuestion('How can I improve my coding skills?')">Coding Tips</button>
+            </div>
+        </div>
+        <div id="messages"></div>
+        <div id="input-container">
+            <input type="text" id="user-input" placeholder="Type a message...">
+            <button id="send" onclick="sendMessage()">⬆</button>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        function getGreetingBasedOnTime() {
+            const hour = new Date().getHours(); // Şu anki saati al
+
+            if (hour >= 5 && hour < 12) {
+                return "Good morning! ☀️";
+            } else if (hour >= 12 && hour < 18) {
+                return "Good afternoon! 🌤️";
+            } else if (hour >= 18 && hour < 22) {
+                return "Good evening! 🌙";
+            } else {
+                return "Good night! 🌃";
+            }
+        }
+
+        function getRandomQuestion() {
+            const questions = [
+                "How are you today?",
+                "How is your day going?",
+                "How are things going?",
+                "How's everything?",
+                "How are you feeling today?"
+            ];
+            const randomIndex = Math.floor(Math.random() * questions.length); // Rastgele bir soru seç
+            return questions[randomIndex];
+        }
+
+        function formatResponse(response) {
+            // Bold text: **text** -> <strong>text</strong>
+            response = response.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            
+            // Italic text: *text* -> <em>text</em>
+            response = response.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            
+            // New lines: \n -> <br>
+            response = response.replace(/\n/g, '<br>');
+            
+            // Links: [text](url) -> <a href="url">text</a>
+            response = response.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>');
+            
+            // Lists: - item -> <ul><li>item</li></ul>
+            response = response.replace(/- (.*?)(<br>|$)/g, '<ul><li>$1</li></ul>');
+            
+            return response;
+        }
+
+        function sanitizeInput(input) {
+            // Sanitize input to prevent XSS attacks
+            return input.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        function sendMessage() {
+            let userInput = document.getElementById('user-input').value;
+            let messages = document.getElementById('messages');
+
+            // Prevent sending empty messages
+            if (!userInput.trim()) return;
+
+            // Add user message to chat
+            let userMessage = document.createElement('div');
+            userMessage.className = 'user-message';
+            userMessage.textContent = userInput;
+            messages.appendChild(userMessage);
+
+            // Show loading indicator
+            let loadingMessage = document.createElement('div');
+            loadingMessage.className = 'bot-message';
+            loadingMessage.textContent = 'Bot is typing...';
+            messages.appendChild(loadingMessage);
+
+            // Send user message to server
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: userInput }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Remove loading indicator
+                messages.removeChild(loadingMessage);
+
+                // Add bot response to chat
+                let botMessage = document.createElement('div');
+                botMessage.className = 'bot-message';
+                botMessage.innerHTML = formatResponse(sanitizeInput(data.response));
+                messages.appendChild(botMessage);
+
+                // Scroll to the bottom of chat
+                messages.scrollTop = messages.scrollHeight;
+            })
+            .catch(error => {
+                // Remove loading indicator
+                messages.removeChild(loadingMessage);
+
+                console.error('Error:', error);
+                let errorMessage = document.createElement('div');
+                errorMessage.className = 'bot-message';
+                errorMessage.textContent = 'Error: ' + error.message;
+                messages.appendChild(errorMessage);
+            });
+
+            // Clear input field
+            document.getElementById('user-input').value = '';
+        }
+
+        function setQuestion(question) {
+            document.getElementById('user-input').value = question;
+        }
+
+        // Fetch the initial welcome message
+        window.onload = function() {
+            let messages = document.getElementById('messages');
+
+            // Günün saatine göre karşılama mesajı al
+            const greeting = getGreetingBasedOnTime();
+            const question = getRandomQuestion();
+
+            // Karşılama mesajını sohbete ekle
+            let botMessage = document.createElement('div');
+            botMessage.className = 'bot-message';
+            botMessage.textContent = `${greeting} ${question}`;
+            messages.appendChild(botMessage);
+
+            // Sohbeti en altına kaydır
+            messages.scrollTop = messages.scrollHeight;
+        };
+    </script>
+</body>
+</html>
