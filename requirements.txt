@@ -5,4 +5,4 @@ requests
 scikit-learn
 openai
 gunicorn
-groq==1.0.0
+groq
