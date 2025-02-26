@@ -89,6 +89,7 @@ Open your browser and go to http://127.0.0.1:5000.
 
 📂 Project Structure
 
+```
 chatbot-assistant/
 │
 ├── app.py # Flask application
@@ -102,6 +103,7 @@ chatbot-assistant/
 ├── templates/ # HTML templates
 │ └── index.html # Main HTML file
 └── README.md # Project documentation
+```
 
 🤝 Contributing
 Contributions are welcome! If you'd like to contribute to this project, please follow these steps:
