@@ -6,3 +6,4 @@ scikit-learn
 openai
 gunicorn
 groq
+python-dotenv
