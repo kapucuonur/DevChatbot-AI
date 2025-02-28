@@ -7,3 +7,5 @@ openai
 gunicorn
 groq
 python-dotenv
+fuzzywuzzy
+Flask-SocketIO

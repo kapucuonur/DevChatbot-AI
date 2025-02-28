@@ -1,134 +1,127 @@
-# Chatbot Assistant 🤖
+## Screenshots
 
-Welcome to **Chatbot Assistant**, a smart and interactive chatbot designed to help you with various topics such as programming, software development, artificial intelligence, and more! This chatbot leverages the **GROQ API** to provide intelligent and context-aware responses.
+![Chatbot Interface](static/images/chatbot_screenshot.png)
 
----
+## Example Usage
 
-## 🌟 Features
+- **User**: Hello
+- **Bot**: Hello! What's your name? 😊
 
-- **Interactive Chat**: Ask questions and get instant responses from the chatbot.
-- **GROQ API Integration**: Utilizes the GROQ API for advanced natural language processing.
-- **Markdown Support**: Responses are formatted with Markdown for better readability.
-- **Responsive Design**: Works seamlessly on both desktop and mobile devices.
-- **Dark/Light Theme**: Switch between dark and light themes for a comfortable experience.
+- **User**: How can I improve my coding skills?
+- **Bot**: Improving your coding skills requires consistent effort and the right strategies. Here are some detailed tips...
 
----
+# DevChatbot-AI
 
-## 🛠️ Tech Stack
+DevChatbot-AI is a Flask-based AI chatbot DEVELOPER HELP application that interacts with users using natural language processing (NLP). The chatbot responds to predefined intents from `intents.json` and uses the Groq API for answers to unknown queries. The application is trained using `train.py` and can be deployed on Render.
 
-### Frontend
+## Project Structure
 
-- **HTML5**: Structure of the web application.
-- **CSS3**: Styling and layout.
-- **JavaScript**: Interactive functionality.
-- **Markdown**: Formatting bot responses.
-
-### Backend
-
-- **Python**: Core programming language.
-- **Flask**: Web framework for handling requests.
-- **GROQ API**: For intelligent chatbot responses.
-
-### Tools & Libraries
-
-- **Git**: Version control.
-- **Docker**: Containerization for deployment.
-- **python-dotenv**: For managing environment variables.
-- **NPM**: Package management.
-- **Webpack**: Bundling assets.
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-Before you begin, ensure you have the following installed:
-
-- Python 3.8 or higher
-- Flask (`pip install flask`)
-- python-dotenv (`pip install python-dotenv`)
-
-### Installation
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/yourusername/chatbot-assistant.git
-   cd chatbot-assistant
-   Set up a virtual environment (optional but recommended):
-   ```
-2. **Create a virtual environment**:
-   python -m venv venv
-   source venv/bin/activate # On Windows, use `venv\Scripts\activate`
-   Install dependencies:
-
-3.**install dependencies:**
-pip install -r requirements.txt
-Set up environment variables:
-
-4.**install dependencies:**
-Create a .env file in the root directory.
-
-Add your GROQ API key to the .env file:
-
-GROQ_API_KEY=your_api_key_here
-
-5.**Run the application:**
-python app.py
-Access the application:
-
-6.**Access the application:**
-Open your browser and go to http://127.0.0.1:5000.
-
-📖 Usage
-1.Ask Questions: Type your question in the input box and press Enter or click the Send button.
-
-2.Explore Topics: Use the predefined buttons to ask common questions about programming, development, AI, and coding tips.
-
-3.Switch Themes: Toggle between dark and light themes using the theme button.
-
-📂 Project Structure
-
-```
-chatbot-assistant/
-│
-├── app.py # Flask application
-├── requirements.txt # Python dependencies
-├── .env # Environment variables (not included in version control)
-├── static/ # Static files (CSS, JS, images)
+The project is organized as follows:
+devchatbot-ai/
+├── data/
+│ └── intents.json # Predefined intents and sample phrases for the chatbot
+├── flask_session/ # Flask session data
+├── static/
 │ ├── css/
-│ │ └── styles.css # Custom styles
+│ │ └── style.css # CSS styles for the frontend
 │ └── js/
-│ └── script.js # Interactive JavaScript
-├── templates/ # HTML templates
-│ └── index.html # Main HTML file
-└── README.md # Project documentation
-```
+│ └── style.js # JavaScript for interactive features
+├── models/
+│ ├── chatbot_model.h5 # Trained chatbot model
+│ ├── label_encoder.pickle # Label encoder for intent classification
+│ └── tokenizer.pickle # Tokenizer for text processing
+├── templates/
+│ └── index.html # HTML template for the chatbot interface
+├── venv/ # Python virtual environment
+├── .env # Environment variables (API keys, secret key)
+├── .gitignore # Files ignored by Git
+├── app.py # Main Flask application file
+├── gunicorn.conf.py # Gunicorn configuration for production
+├── Procfile # Procfile for deployment
+├── requirements.txt # Python dependencies
+├── train.py # Script to train the chatbot model
+└── user_data.py # Helper file for user data processing
 
-🤝 Contributing
-Contributions are welcome! If you'd like to contribute to this project, please follow these steps:
+## Setup
 
-1.Fork the repository.
+1. **Prerequisites**: Ensure you have Python 3.8 or higher installed.
 
-2.Create a new branch:
+2. **Create a Virtual Environment**:
 
-git checkout -b feature/your-feature-name
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate  # Linux/MacOS
+   venv\Scripts\activate     # Windows
 
-3.Make your changes and commit them:
 
-git commit -m "Add your feature"
+   ```
 
-4.Push to the branch:
+3. **Install Dependencies**:
+   nstall Dependencies:
 
-git push origin feature/your-feature-name
-Open a pull request and describe your changes.
+pip install -r requirements.txt
+Set Up Environment Variables:
+Create a .env file and add the following:
 
-📄 License
+4. **Set Up Environment Variables**:
+   SECRET_KEY=your_secret_key
+   GROQ_API_KEY=your_groq_api_key
+   Train the Model (Optional):
+   If you want to retrain the model, run:
+
+5. **Train the Model (Optional)**:
+   python train.py
+
+### Running the Application
+
+1. **Run the Flask App:**
+
+python app.py
+The app will be available at http://127.0.0.1:5000.
+
+2. **Run with Gunicorn (For Production):**
+
+gunicorn --config gunicorn.conf.py app:app
+
+### Usage
+
+1. Open your browser and navigate to http://127.0.0.1:5000.
+
+2. Interact with the chatbot by typing messages. The bot will respond based on the intents in intents.json or fetch answers from the Groq API if the query is unknown.
+
+### Deployment on Render
+
+1. Create a Render Account: Sign up at Render.
+
+2. Create a New Web Service:
+
+   -Connect your GitHub repository to Render.
+
+   -Select the repository containing this project.
+
+3. Configure the Web Service:
+
+   -Set the Build Command to:
+
+   bash
+   pip install -r requirements.txt
+
+   -Set the Start Command to:
+   bash
+   gunicorn --config gunicorn.conf.py app:app
+
+   -Add environment variables (SECRET_KEY and GROQ_API_KEY) in the Render dashboard.
+
+### Deploy:
+
+-Click "Deploy" to start the deployment process.
+
+-Once deployed, your chatbot will be live at the provided Render URL.
+
+### Contributing
+
+If you'd like to contribute to this project, please fork the repository and submit a pull request.
+
+### License
+
 This project is licensed under the MIT License. See the LICENSE file for details.
-
-🙏 Acknowledgments
-.Flask: For providing a simple and powerful web framework.
-
-.GROQ API: For enabling intelligent chatbot responses.
-
-.Markdown: For making text formatting easy and readable.

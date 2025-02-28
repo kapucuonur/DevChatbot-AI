@@ -4,10 +4,15 @@ body {
     background-color: #f8f9fa;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
 }
 
+/* Help Topics */
 #help-topics {
-    padding: 10px;
+    padding: 20px;
     background-color: #e9ecef;
 }
 
@@ -24,13 +29,13 @@ body {
 
 .button-container button {
     margin: 5px;
-    padding: 10px 20px;
+    padding: 15px 30px;
     background-color: #17a2b8;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
     transition: background-color 0.3s;
 }
 
@@ -39,56 +44,56 @@ body {
 }
 
 /* Chat Container */
-#input-container {
-    display: flex;
-    border-top: 1px solid #ccc;
-    background-color: #f8f9fa;
-    border-radius: 15px;
-}
-
-#user-input {
+#chat-container {
     flex: 1;
-    padding: 15px;
-    border: none;
-    outline: none;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 90px); /* Adjusted height to push chat container down */
+    max-width: 800px; /* Increased width */
+    margin: 30px auto; /* Centered with margin */
+}
+
+/* Messages Box */
+/* Bot is typing styling */
+.typing-indicator {
     font-size: 16px;
-
+    font-style: italic;
+    color: #6c757d;
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
 }
 
-/* Button Styles */
-button {
-    padding: 15px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
+/* Adjusted Messages Box for scrolling */
+#messages {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;  /* Change to reverse order to push new messages to the bottom */
+    gap: 15px;
+    max-height: 500px;
+    height: 100%;
+    overflow-anchor: auto;
+    scroll-behavior: smooth;
 }
 
-button:hover {
-    background-color: #b4f847;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s;
-    transition: background-color 0.3s;
-    border-radius: 50px;
-}
 
 /* Message Bubbles */
 .user-message, .bot-message {
     max-width: 80%;
-    padding: 12px;
-    margin: 10px;
+    padding: 15px;
+    margin: 12px;
     border-radius: 15px;
     animation: slideIn 0.5s ease-out;
-    font-size: 16px;
-    line-height: 1.5;
+    font-size: 18px;
+    line-height: 1.6;
     word-wrap: break-word;
 }
 
 /* User message styling */
 .user-message {
-    background-color: #d1e7dd; /* Light green */
+    background-color: #d1e7dd;
     align-self: flex-end;
     text-align: right;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -96,19 +101,50 @@ button:hover {
 
 /* Bot message styling */
 .bot-message {
-    background-color: #f8d7da; /* Light red */
+    background-color: #f8d7da;
     align-self: flex-start;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Center the message container */
-#messages {
-    flex: 1;
-    padding: 20px;
-    overflow-y: scroll;
+/* Input Container */
+#input-container {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    border-top: 1px solid #ccc;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 15px;
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Input Field */
+#user-input {
+    flex: 1;
+    padding: 18px;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Styles */
+button {
+    padding: 18px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #17a2b8;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s, background-color 0.3s;
 }
 
 /* Focused Input Style */
@@ -117,8 +153,6 @@ button:hover {
     border: 1px solid #007BFF; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    /* padding: 5px;
-    margin: 5px; */
 }
 
 /* Animation for message bubbles */
@@ -127,19 +161,25 @@ button:hover {
     to { transform: translateY(0); opacity: 1; }
 }
 
-/* Responsive Design for smaller screens */
-@media (max-width: 600px) {
+/* Responsive Design */
+@media (max-width: 800px) {
+    #chat-container {
+        max-width: 100%;
+        margin: 20px;
+    }
+
     #messages {
-        padding: 10px;
+        padding: 15px;
+        max-height: 450px;
     }
 
     #user-input {
-        font-size: 14px;
-        padding: 12px;
+        font-size: 16px;
+        padding: 15px;
     }
 
     button {
-        padding: 12px;
-        font-size: 14px;
+        padding: 15px;
+        font-size: 16px;
     }
 }
