@@ -15,7 +15,7 @@
 DevChatbot-AI is a Flask-based AI chatbot DEVELOPER HELP application that interacts with users using natural language processing (NLP). The chatbot responds to predefined intents from `intents.json` and uses the Groq API for answers to unknown queries. The application is trained using `train.py` and can be deployed on Render.
 
 ## Project Structure
-
+```
 The project is organized as follows:
 devchatbot-ai/
 ├── data/
@@ -41,7 +41,7 @@ devchatbot-ai/
 ├── requirements.txt # Python dependencies
 ├── train.py # Script to train the chatbot model
 └── user_data.py # Helper file for user data processing
-
+```
 ## Setup
 
 1. **Prerequisites**: Ensure you have Python 3.8 or higher installed.
